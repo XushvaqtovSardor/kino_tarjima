@@ -3,12 +3,12 @@ version: "3.9"
 services:
   db:
     image: postgres:16
-    container_name: kino_database
+    container_name: kino_tarjimadb
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: kino_db
+      POSTGRES_DB: kino_tarjima
     ports:
       - "5445:5432"
     volumes:
@@ -22,7 +22,7 @@ services:
 
   app:
     build: .
-    container_name: kino_bot
+    container_name: kino_tarjima
     restart: always
     env_file:
       - .env

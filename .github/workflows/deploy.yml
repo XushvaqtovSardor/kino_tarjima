@@ -23,12 +23,12 @@ jobs:
             mkdir -p /root
             cd /root
 
-            if [ ! -d "kinolarBot/.git" ]; then
+            if [ ! -d "kino_tarjima/.git" ]; then
               echo "Cloning repository!" 
-              git clone https://github.com/XushvaqtovSardor/kinolarBot
+              git clone https://github.com/XushvaqtovSardor/kino_tarjima
             else
               echo "Pulling latest changes!"
-              cd kinolarBot   
+              cd kino_tarjima   
               git pull origin main  
             fi
 
