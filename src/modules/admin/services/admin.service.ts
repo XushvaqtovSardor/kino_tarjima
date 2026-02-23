@@ -4,7 +4,7 @@ import { AdminRole } from '@prisma/client';
 
 @Injectable()
 export class AdminService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async isAdmin(telegramId: string): Promise<boolean> {
     const admin = await this.prisma.admin.findUnique({
@@ -66,16 +66,40 @@ export class AdminService {
     canDeleteContent?: boolean;
     createdBy: string;
   }) {
-    return this.prisma.admin.create({
-      data: {
-        telegramId: data.telegramId,
-        username: data.username,
-        role: data.role as AdminRole,
-        canAddAdmin: data.canAddAdmin || false,
-        canDeleteContent: data.canDeleteContent || false,
-        createdBy: data.createdBy,
-      },
-    });
+    // SUPERADMIN uchun avtomatik barcha huquqlar true bo'ladi
+    const role = data.role as AdminRole;
+    const isSuperAdmin = role === AdminRole.SUPERADMIN;
+    const isManager = role === AdminRole.MANAGER;
+
+    const canAddAdmin = isSuperAdmin ? true : (data.canAddAdmin || false);
+    const canDeleteContent = isSuperAdmin || isManager ? true : (data.canDeleteContent || false);
+
+    try {
+      return await this.prisma.admin.create({
+        data: {
+          telegramId: data.telegramId,
+          username: data.username,
+          role: role,
+          canAddAdmin: canAddAdmin,
+          canDeleteContent: canDeleteContent,
+          createdBy: data.createdBy,
+        },
+      });
+    } catch (error) {
+      // Agar admin allaqachon mavjud bo'lsa, yangilash
+      if (error.code === 'P2002') {
+        return await this.prisma.admin.update({
+          where: { telegramId: data.telegramId },
+          data: {
+            username: data.username,
+            role: role,
+            canAddAdmin: canAddAdmin,
+            canDeleteContent: canDeleteContent,
+          },
+        });
+      }
+      throw error;
+    }
   }
 
   async listAdmins() {
