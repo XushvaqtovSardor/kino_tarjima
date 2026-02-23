@@ -71,6 +71,9 @@ backups/
 *.sql.gz
 *.dump
 
+# But keep Prisma migrations SQL files
+!prisma/migrations/**/*.sql
+
 # But keep backup scripts and guides
 !scripts/
 !scripts/backup.sh
