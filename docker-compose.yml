@@ -41,7 +41,7 @@ services:
 
   backup:
     image: postgres:16
-    container_name: kino_backup
+    container_name: kino_tarjima_backup
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
