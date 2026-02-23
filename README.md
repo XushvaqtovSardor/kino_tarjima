@@ -245,10 +245,10 @@ BOT_USERNAME=your_bot_username
 DATABASE_URL=postgresql://user:password@host:5432/database
 
 # For Docker Compose
-DB_USER=azizbot
-DB_PASSWORD=strong_password
-DB_NAME=aziz_bot_db
-DB_HOST=postgres
+DB_USER=kino_tarjima_user
+DB_PASSWORD=kino_tarjima_pass_2026
+DB_NAME=kino_tarjima_db
+DB_HOST=db
 DB_PORT=5432
 ```
 

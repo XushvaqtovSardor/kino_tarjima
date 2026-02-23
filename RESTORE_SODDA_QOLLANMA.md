@@ -208,15 +208,15 @@ docker compose logs -f app
 
 ```bash
 # Jadvallar soni
-docker exec kino_database psql -U postgres -d kino_db -c \
+docker exec kino_tarjima_db psql -U kino_tarjima_user -d kino_tarjima_db -c \
   "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='public';"
 
 # Foydalanuvchilar soni
-docker exec kino_database psql -U postgres -d kino_db -c \
+docker exec kino_tarjima_db psql -U kino_tarjima_user -d kino_tarjima_db -c \
   "SELECT COUNT(*) FROM \"User\";"
 
 # Filmlar soni
-docker exec kino_database psql -U postgres -d kino_db -c \
+docker exec kino_tarjima_db psql -U kino_tarjima_user -d kino_tarjima_db -c \
   "SELECT COUNT(*) FROM \"Movie\";"
 ```
 
@@ -265,7 +265,7 @@ ls -1 backups/
 **Yechim:**
 ```bash
 # Database containerini tekshirish
-docker ps | grep kino_database
+docker ps | grep kino_tarjima_db
 
 # Agar yo'q bo'lsa, ishga tushirish
 docker compose up -d db
@@ -490,7 +490,7 @@ Agar muammo hal bo'lmasa:
 
 ```bash
 # Database logs
-docker logs kino_database --tail 100 > db_logs.txt
+docker logs kino_tarjima_db --tail 100 > db_logs.txt
 
 # Bot logs
 docker logs kino_bot --tail 100 > bot_logs.txt
@@ -507,15 +507,15 @@ df -h > disk_space.txt
 # Manual qadam-baqadam restore:
 
 # 1. Database tozalash
-docker exec kino_database psql -U postgres -d postgres -c "DROP DATABASE IF EXISTS kino_db;"
-docker exec kino_database psql -U postgres -d postgres -c "CREATE DATABASE kino_db;"
+docker exec kino_tarjima_db psql -U kino_tarjima_user -d postgres -c "DROP DATABASE IF EXISTS kino_tarjima_db;"
+docker exec kino_tarjima_db psql -U kino_tarjima_user -d postgres -c "CREATE DATABASE kino_tarjima_db;"
 
 # 2. Backupni dekompressiya qilish va yuklash
-gunzip -c backups/kino_db_backup_20260223_100000.sql.gz | \
-  docker exec -i kino_database psql -U postgres -d kino_db
+gunzip -c backups/kino_tarjima_backup_20260223_100000.sql.gz | \
+  docker exec -i kino_tarjima_db psql -U kino_tarjima_user -d kino_tarjima_db
 
 # 3. Natijani tekshirish
-docker exec kino_database psql -U postgres -d kino_db -c "\dt"
+docker exec kino_tarjima_db psql -U kino_tarjima_user -d kino_tarjima_db -c "\dt"
 ```
 
 ---

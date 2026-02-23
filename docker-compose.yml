@@ -15,7 +15,7 @@ services:
       - kino_tarjima_data:/var/lib/postgresql/data
       - ./backups:/backups
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: [ "CMD-SHELL", "pg_isready -U kino_tarjima_user" ]
       interval: 5s
       timeout: 5s
       retries: 5
