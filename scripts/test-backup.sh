@@ -31,7 +31,7 @@ function test_result() {
 
 # Test 1: Docker containers ishlayaptimi?
 echo "Test 1: Docker containerlarni tekshirish..."
-if docker ps | grep -q kino_database; then
+if docker ps | grep -q kino_tarjima_db; then
   test_result 0 "Database container ishlayapti"
 else
   test_result 1 "Database container ishlamayapti!"

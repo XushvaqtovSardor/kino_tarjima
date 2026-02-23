@@ -91,8 +91,8 @@ See [QUICK_DEPLOY.md](./QUICK_DEPLOY.md) for one-command deployment or [DIGITAL_
 **Quick Deploy:**
 ```bash
 # On your droplet
-git clone https://github.com/XushvaqtovSardor/aziz_kino_bot_withgrammy.git
-cd aziz_kino_bot_withgrammy
+git clone https://github.com/YourUsername/kino_tarjima_bot.git
+cd kino_tarjima_bot
 cp .env.example .env
 nano .env  # Configure settings
 docker compose up -d

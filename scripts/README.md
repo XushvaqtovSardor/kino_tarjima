@@ -91,8 +91,8 @@ Muammoga duch kelsangiz:
 
 2. Loglarni tekshiring:
    ```bash
-   docker logs kino_database --tail 50
-   docker logs kino_bot --tail 50
+   docker logs kino_tarjima_db --tail 50
+   docker logs kino_tarjima_app --tail 50
    ```
 
 3. To'liq qo'llanmani o'qing:
