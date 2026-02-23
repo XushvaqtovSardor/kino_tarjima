@@ -40,33 +40,35 @@ services:
        "
 
   backup:
-    image: postgres:16
-    container_name: kino_tarjima_backup
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: kino_db
-      PGHOST: db
-      BACKUP_RETENTION_DAYS: 180
-    volumes:
-      - ./backups:/backups
-      - ./scripts:/scripts
-    depends_on:
-      db:
-        condition: service_healthy
-    entrypoint: /bin/bash
-    command: >
-      -c "
-        chmod +x /scripts/*.sh &&
-        echo '⏳ Backup container boshlandi. Birinchi backup 5 daqiqada...' &&
-        sleep 300 && /scripts/backup.sh &&
-        echo '✅ Birinchi backup tugallandi. Keyingi backup 24 soatda...' &&
-        while true; do
-          sleep 21600
-          /scripts/backup.sh
-        done
-      "
+  image: postgres:16
+  container_name: kino_tarjima_backup
+  restart: unless-stopped
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: 12345
+    POSTGRES_DB: kino_tarjima
+    PGHOST: db
+    PGPORT: 5432
+    BACKUP_RETENTION_DAYS: 180
+  volumes:
+    - ./backups:/backups
+    - ./scripts:/scripts
+  depends_on:
+    db:
+      condition: service_healthy
+  entrypoint: /bin/bash
+  command: >
+    -c "
+      chmod +x /scripts/*.sh &&
+      echo '⏳ Backup container started. First backup in 5 minutes...' &&
+      sleep 300 &&
+      /scripts/backup.sh &&
+      echo '✅ First backup done. Next backups every 6 hours...' &&
+      while true; do
+        sleep 21600
+        /scripts/backup.sh
+      done
+    "
 
 volumes:
   baza_data:
