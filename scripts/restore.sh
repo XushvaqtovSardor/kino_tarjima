@@ -15,7 +15,7 @@ if [ -z "$1" ]; then
   echo "  ./restore.sh <backup_fayl_nomi>"
   echo ""
   echo "🗂️  Mavjud backuplar:"
-  ls -lht "${BACKUP_DIR}"/kino_db_backup_*.sql.gz 2>/dev/null | head -10 || echo "Backuplar topilmadi"
+  ls -lht "${BACKUP_DIR}"/kino_tarjima_backup_*.sql.gz 2>/dev/null | head -10 || echo "Backuplar topilmadi"
   exit 1
 fi
 
@@ -27,7 +27,7 @@ if [ ! -f "${BACKUP_PATH}" ]; then
   echo "❌ Xatolik: Backup fayl topilmadi: ${BACKUP_PATH}"
   echo ""
   echo "🗂️  Mavjud backuplar:"
-  ls -lht "${BACKUP_DIR}"/kino_db_backup_*.sql.gz 2>/dev/null | head -10 || echo "Backuplar topilmadi"
+  ls -lht "${BACKUP_DIR}"/kino_tarjima_backup_*.sql.gz 2>/dev/null | head -10 || echo "Backuplar topilmadi"
   exit 1
 fi
 
