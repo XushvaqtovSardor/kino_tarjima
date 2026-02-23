@@ -28,15 +28,22 @@ jobs:
               git clone https://github.com/XushvaqtovSardor/kino_tarjima
             else
               echo "Pulling latest changes!"
-              cd kino_tarjima   
-              git pull origin main  
+              cd kino_tarjima
+              git fetch origin
+              git reset --hard origin/main
+              git clean -fd
             fi
 
+            cd kino_tarjima
+            
             echo "Stopping containers"
-            docker compose down
+            docker compose down --timeout 30
 
             echo "Building containers"
             docker compose build 
 
             echo "Running containers"
             docker compose up -d
+            
+            echo "Deployment completed!"
+            docker compose ps
